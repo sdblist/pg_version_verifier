@@ -2,7 +2,7 @@ WITH
     -- configure
     conf AS (
         SELECT
-            'ru'  AS conf_language_code      -- null or value like 'en', 'ru'
+            'en'  AS conf_language_code      -- null or value like 'en', 'ru'
     ),
     -- db_family_list
     db_family_list AS (
@@ -205,7 +205,7 @@ WITH
                 -- PostgreSQL
                 ('CVE-2026-2007',  'PostgreSQL', ARRAY[180002],
                     ARRAY[[180000, 180001]]),
-                ('CVE-2026-2003',  'PostgreSQL', ARRAY[180002, 170008, 160012, 150016, 140021],
+                ('CVE-2026-2006',  'PostgreSQL', ARRAY[180002, 170008, 160012, 150016, 140021],
                     ARRAY[[180000, 180001], [170000, 170007], [160000, 160011], [150000, 150015], [140000, 140020]]),
                 ('CVE-2026-2005',  'PostgreSQL', ARRAY[180002, 170008, 160012, 150016, 140021],
                     ARRAY[[180000, 180001], [170000, 170007], [160000, 160011], [150000, 150015], [140000, 140020]]),
@@ -305,33 +305,70 @@ WITH
             INNER JOIN current_db_major_version AS c ON vlu.db_family = c.db_family
                 AND COALESCE(c.alternative_server_version_num, c.server_version_num)
                     BETWEEN vlu.min_server_version_num AND vlu.max_server_version_num
+    ),
+    -- current db end_of_life
+    current_db_eol AS (
+        SELECT
+            eol.eol_date AS end_of_life,
+            CASE
+                WHEN (eol.eol_date <= now()) THEN 'critical'
+                WHEN (eol.eol_date <= now() + '60 days'::interval) THEN 'error'
+                WHEN (eol.eol_date <= now() + '180 days'::interval) THEN 'warning'
+                ELSE 'info'
+            END AS end_of_life_level,
+            eol.db_family,
+            eol.major_version
+        FROM current_db_major_version AS c
+            LEFT JOIN db_family_major_version_eol_list AS eol ON c.db_family = eol.db_family
+                AND c.major_version = eol.major_version
+    ),
+    -- current db minor version update to
+    current_db_update_to AS (
+        SELECT
+            ver.db_family,
+            ver.major_version,
+            ver.code AS latest_minor_version,
+            ver.release_date AS latest_minor_version_release_date,
+            CASE
+                WHEN COALESCE(ver.alternative_server_version_num, ver.server_version_num) >
+                     COALESCE(c.alternative_server_version_num, c.server_version_num) THEN true
+                ELSE false
+            END AS update_needed
+        FROM current_db_major_version AS c
+            LEFT JOIN db_family_version_list AS ver ON c.db_family = ver.db_family
+                AND c.major_version = ver.major_version
+        ORDER BY COALESCE(ver.alternative_server_version_num, ver.server_version_num) DESC
+        LIMIT 1
     )
 -- result
 SELECT
     c.db_family,
     c.major_version,
-    ver.code,
-    c.server_version_num,
-    (SELECT json_agg(vl) FROM (SELECT * FROM current_db_vulnerability_list) AS vl) AS vulnerability_list,
+    ver.code AS version,
+    ver.release_date,
+    eol.end_of_life,
+    eol.end_of_life_level,
+    uto.update_needed,
+    uto.latest_minor_version,
+    uto.latest_minor_version_release_date,
+    --
+    (SELECT json_agg(vl) FROM (SELECT * FROM current_db_vulnerability_list) AS vl) AS vulnerability_list_json,
     json_build_object(
         'db_family', inf.db_family,
-        'end_of_life', eol.eol_date,
+        'end_of_life', eol.end_of_life,
+        'end_of_life_level', eol.end_of_life_level,
         'db_family_info', inf.*,
-        'version_info', ver.*
-    ) AS info,
+        'version_info', ver.*,
+        'update_to', uto.*
+    ) AS info_json
     -- recommendations
-    -- end_of_life
-    eol.eol_date AS end_of_life,
-    CASE
-        WHEN (eol.eol_date <= now()) THEN 'critical'
-        WHEN (eol.eol_date <= now() + '60 days'::interval) THEN 'error'
-        WHEN (eol.eol_date <= now() + '180 days'::interval) THEN 'warning'
-    END AS end_of_life_level
     -- update to
 FROM current_db_major_version AS c
     LEFT JOIN db_family_info AS inf ON c.db_family = inf.db_family
     LEFT JOIN db_family_version_list AS ver ON c.db_family = ver.db_family
         AND c.server_version_num = ver.server_version_num
-    LEFT JOIN db_family_major_version_eol_list AS eol ON c.db_family = eol.db_family
+    LEFT JOIN current_db_eol AS eol ON c.db_family = eol.db_family
         AND c.major_version = eol.major_version
+    LEFT JOIN current_db_update_to AS uto ON c.db_family = uto.db_family
+        AND c.major_version = uto.major_version
 ;
