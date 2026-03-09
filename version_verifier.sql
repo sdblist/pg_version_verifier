@@ -60,10 +60,12 @@ WITH
         FROM
             (VALUES
                 -- PostgreSQL 18
+                ('PostgreSQL', '18.3',   180003, 18, '2026-02-26', false, null, null),
                 ('PostgreSQL', '18.2',   180002, 18, '2026-02-12', false, null, null),
                 ('PostgreSQL', '18.1',   180001, 18, '2025-11-13', false, null, null),
                 ('PostgreSQL', '18.0',   180000, 18, '2025-09-25', false, null, null),
                 -- PostgreSQL 17
+                ('PostgreSQL', '17.9',   170009, 17, '2026-02-26', false, null, null),
                 ('PostgreSQL', '17.8',   170008, 17, '2026-02-12', false, null, null),
                 ('PostgreSQL', '17.7',   170007, 17, '2025-11-13', false, null, null),
                 ('PostgreSQL', '17.6',   170006, 17, '2025-08-14', false, null, null),
@@ -74,6 +76,7 @@ WITH
                 ('PostgreSQL', '17.1',   170001, 17, '2024-11-14', false, null, null),
                 ('PostgreSQL', '17.0',   170000, 17, '2024-09-26', false, null, null),
                 -- PostgreSQL 16
+                ('PostgreSQL', '16.13',  160013, 16, '2026-02-26', false, null, null),
                 ('PostgreSQL', '16.12',  160012, 16, '2026-02-12', false, null, null),
                 ('PostgreSQL', '16.11',  160011, 16, '2025-11-13', false, null, null),
                 ('PostgreSQL', '16.10',  160010, 16, '2025-08-14', false, null, null),
@@ -88,6 +91,7 @@ WITH
                 ('PostgreSQL', '16.1',   160001, 16, '2023-11-09', false, null, null),
                 ('PostgreSQL', '16.0',   160000, 16, '2023-09-14', false, null, null),
                 -- PostgreSQL 15
+                ('PostgreSQL', '15.17',  150017, 15, '2026-02-26', false, null, null),
                 ('PostgreSQL', '15.16',  150016, 15, '2026-02-12', false, null, null),
                 ('PostgreSQL', '15.15',  150015, 15, '2025-11-13', false, null, null),
                 ('PostgreSQL', '15.14',  150014, 15, '2025-08-14', false, null, null),
@@ -106,6 +110,7 @@ WITH
                 ('PostgreSQL', '15.1',   150001, 15, '2022-11-10', false, null, null),
                 ('PostgreSQL', '15.0',   150000, 15, '2022-10-13', false, null, null),
                 -- PostgreSQL 14
+                ('PostgreSQL', '14.22',  140022, 14, '2026-02-26', false, null, null),
                 ('PostgreSQL', '14.21',  140021, 14, '2026-02-12', false, null, null),
                 ('PostgreSQL', '14.20',  140020, 14, '2025-11-13', false, null, null),
                 ('PostgreSQL', '14.19',  140019, 14, '2025-08-14', false, null, null),
