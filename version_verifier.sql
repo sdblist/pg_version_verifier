@@ -60,11 +60,13 @@ WITH
         FROM
             (VALUES
                 -- PostgreSQL 18
+                ('PostgreSQL', '18.4',   180004, 18, '2026-05-14', false, null, null),
                 ('PostgreSQL', '18.3',   180003, 18, '2026-02-26', false, null, null),
                 ('PostgreSQL', '18.2',   180002, 18, '2026-02-12', false, null, null),
                 ('PostgreSQL', '18.1',   180001, 18, '2025-11-13', false, null, null),
                 ('PostgreSQL', '18.0',   180000, 18, '2025-09-25', false, null, null),
                 -- PostgreSQL 17
+                ('PostgreSQL', '17.10',  170010, 17, '2026-05-14', false, null, null),
                 ('PostgreSQL', '17.9',   170009, 17, '2026-02-26', false, null, null),
                 ('PostgreSQL', '17.8',   170008, 17, '2026-02-12', false, null, null),
                 ('PostgreSQL', '17.7',   170007, 17, '2025-11-13', false, null, null),
@@ -76,6 +78,7 @@ WITH
                 ('PostgreSQL', '17.1',   170001, 17, '2024-11-14', false, null, null),
                 ('PostgreSQL', '17.0',   170000, 17, '2024-09-26', false, null, null),
                 -- PostgreSQL 16
+                ('PostgreSQL', '16.14',  160014, 16, '2026-05-14', false, null, null),
                 ('PostgreSQL', '16.13',  160013, 16, '2026-02-26', false, null, null),
                 ('PostgreSQL', '16.12',  160012, 16, '2026-02-12', false, null, null),
                 ('PostgreSQL', '16.11',  160011, 16, '2025-11-13', false, null, null),
@@ -91,6 +94,7 @@ WITH
                 ('PostgreSQL', '16.1',   160001, 16, '2023-11-09', false, null, null),
                 ('PostgreSQL', '16.0',   160000, 16, '2023-09-14', false, null, null),
                 -- PostgreSQL 15
+                ('PostgreSQL', '15.18',  150018, 15, '2026-05-14', false, null, null),
                 ('PostgreSQL', '15.17',  150017, 15, '2026-02-26', false, null, null),
                 ('PostgreSQL', '15.16',  150016, 15, '2026-02-12', false, null, null),
                 ('PostgreSQL', '15.15',  150015, 15, '2025-11-13', false, null, null),
@@ -110,6 +114,7 @@ WITH
                 ('PostgreSQL', '15.1',   150001, 15, '2022-11-10', false, null, null),
                 ('PostgreSQL', '15.0',   150000, 15, '2022-10-13', false, null, null),
                 -- PostgreSQL 14
+                ('PostgreSQL', '14.23',  140023, 14, '2026-05-14', false, null, null),
                 ('PostgreSQL', '14.22',  140022, 14, '2026-02-26', false, null, null),
                 ('PostgreSQL', '14.21',  140021, 14, '2026-02-12', false, null, null),
                 ('PostgreSQL', '14.20',  140020, 14, '2025-11-13', false, null, null),
@@ -162,6 +167,28 @@ WITH
         FROM
             (VALUES
                 -- CVE
+                ('CVE-2026-6638',  3.7, ARRAY['https://www.postgresql.org/support/security/CVE-2026-6638/',
+                                              'https://nvd.nist.gov/vuln/detail/CVE-2026-6638']),
+                ('CVE-2026-6637',  8.8, ARRAY['https://www.postgresql.org/support/security/CVE-2026-6637/',
+                                              'https://nvd.nist.gov/vuln/detail/CVE-2026-6637']),
+                ('CVE-2026-6575',  4.3, ARRAY['https://www.postgresql.org/support/security/CVE-2026-6575/',
+                                              'https://nvd.nist.gov/vuln/detail/CVE-2026-6575']),
+                ('CVE-2026-6479',  7.5, ARRAY['https://www.postgresql.org/support/security/CVE-2026-6479/',
+                                              'https://nvd.nist.gov/vuln/detail/CVE-2026-6479']),
+                ('CVE-2026-6478',  6.5, ARRAY['https://www.postgresql.org/support/security/CVE-2026-6478/',
+                                              'https://nvd.nist.gov/vuln/detail/CVE-2026-6478']),
+                ('CVE-2026-6477',  8.8, ARRAY['https://www.postgresql.org/support/security/CVE-2026-6477/',
+                                              'https://nvd.nist.gov/vuln/detail/CVE-2026-6477']),
+                ('CVE-2026-6476',  7.2, ARRAY['https://www.postgresql.org/support/security/CVE-2026-6476/',
+                                              'https://nvd.nist.gov/vuln/detail/CVE-2026-6476']),
+                ('CVE-2026-6475',  8.8, ARRAY['https://www.postgresql.org/support/security/CVE-2026-6475/',
+                                              'https://nvd.nist.gov/vuln/detail/CVE-2026-6475']),
+                ('CVE-2026-6474',  4.3, ARRAY['https://www.postgresql.org/support/security/CVE-2026-6474/',
+                                              'https://nvd.nist.gov/vuln/detail/CVE-2026-6474']),
+                ('CVE-2026-6473',  8.8, ARRAY['https://www.postgresql.org/support/security/CVE-2026-6473/',
+                                              'https://nvd.nist.gov/vuln/detail/CVE-2026-6473']),
+                ('CVE-2026-6472',  5.4, ARRAY['https://www.postgresql.org/support/security/CVE-2026-6472/',
+                                              'https://nvd.nist.gov/vuln/detail/CVE-2026-6472']),
                 ('CVE-2026-2007',  8.2, ARRAY['https://www.postgresql.org/support/security/CVE-2026-2007/',
                                               'https://nvd.nist.gov/vuln/detail/CVE-2026-2007']),
                 ('CVE-2026-2006',  8.8, ARRAY['https://www.postgresql.org/support/security/CVE-2026-2006/',
@@ -208,6 +235,28 @@ WITH
         FROM
             (VALUES
                 -- PostgreSQL
+                ('CVE-2026-6638',  'PostgreSQL', ARRAY[180004, 170010, 160014],
+                    ARRAY[[180000, 180003], [170000, 170009], [160000, 160013]]),
+                ('CVE-2026-6637',  'PostgreSQL', ARRAY[180004, 170010, 160014, 150018, 140023],
+                    ARRAY[[180000, 180003], [170000, 170009], [160000, 160013], [150000, 150017], [140000, 140022]]),
+                ('CVE-2026-6575',  'PostgreSQL', ARRAY[180004],
+                    ARRAY[[180000, 180003]]),
+                ('CVE-2026-6479',  'PostgreSQL', ARRAY[180004, 170010, 160014, 150018, 140023],
+                    ARRAY[[180000, 180003], [170000, 170009], [160000, 160013], [150000, 150017], [140000, 140022]]),
+                ('CVE-2026-6478',  'PostgreSQL', ARRAY[180004, 170010, 160014, 150018, 140023],
+                    ARRAY[[180000, 180003], [170000, 170009], [160000, 160013], [150000, 150017], [140000, 140022]]),
+                ('CVE-2026-6477',  'PostgreSQL', ARRAY[180004, 170010, 160014, 150018, 140023],
+                    ARRAY[[180000, 180003], [170000, 170009], [160000, 160013], [150000, 150017], [140000, 140022]]),
+                ('CVE-2026-6476',  'PostgreSQL', ARRAY[180004, 170010],
+                    ARRAY[[180000, 180003], [170000, 170009]]),
+                ('CVE-2026-6475',  'PostgreSQL', ARRAY[180004, 170010, 160014, 150018, 140023],
+                    ARRAY[[180000, 180003], [170000, 170009], [160000, 160013], [150000, 150017], [140000, 140022]]),
+                ('CVE-2026-6474',  'PostgreSQL', ARRAY[180004, 170010, 160014, 150018, 140023],
+                    ARRAY[[180000, 180003], [170000, 170009], [160000, 160013], [150000, 150017], [140000, 140022]]),
+                ('CVE-2026-6473',  'PostgreSQL', ARRAY[180004, 170010, 160014, 150018, 140023],
+                    ARRAY[[180000, 180003], [170000, 170009], [160000, 160013], [150000, 150017], [140000, 140022]]),
+                ('CVE-2026-6472',  'PostgreSQL', ARRAY[180004, 170010, 160014, 150018, 140023],
+                    ARRAY[[180000, 180003], [170000, 170009], [160000, 160013], [150000, 150017], [140000, 140022]]),
                 ('CVE-2026-2007',  'PostgreSQL', ARRAY[180002],
                     ARRAY[[180000, 180001]]),
                 ('CVE-2026-2006',  'PostgreSQL', ARRAY[180002, 170008, 160012, 150016, 140021],
